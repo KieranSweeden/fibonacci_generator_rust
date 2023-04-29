@@ -5,9 +5,19 @@ fn main() {
 
     loop {
         let index = prompt_user_for_index();
+        println!("{} was the fibonacci index provided", &index);
 
-        println!("{} was the fibonacci index provided", index);
+        let number_at_index = generate_fibonacci_number_at_index(index);
+        println!(
+            "The fibonacci number at index {} is {}",
+            &index, number_at_index
+        );
     }
+}
+
+fn generate_fibonacci_number_at_index(index: i32) -> i32 {
+    let range = 0..=index - 1;
+    range.fold((0, 1), |acc, _| (acc.1, acc.0 + acc.1)).0
 }
 
 fn prompt_user_for_index() -> i32 {
