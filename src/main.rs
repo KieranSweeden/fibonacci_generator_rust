@@ -5,13 +5,45 @@ fn main() {
 
     loop {
         let index = prompt_user_for_index();
-        println!("{} was the fibonacci index provided", &index);
+        println!("Generating fibonacci number at index position {}", &index);
 
         let number_at_index = generate_fibonacci_number_at_index(index);
         println!(
             "The fibonacci number at index {} is {}",
             &index, number_at_index
         );
+
+        let user_wants_to_retry = prompt_user_to_retry();
+        match user_wants_to_retry {
+            true => continue,
+            false => {
+                println!("Goodbye.");
+                break;
+            }
+        }
+    }
+}
+
+fn prompt_user_to_retry() -> bool {
+    loop {
+        println!("Would you like to retry? (Yes = Y | No = N)");
+
+        let mut input = String::new();
+
+        io::stdin()
+            .read_line(&mut input)
+            .expect("Input was invalid.");
+
+        let input = input.trim();
+
+        match input {
+            "Y" => break true,
+            "N" => break false,
+            _ => {
+                println!("Input was not Y or N.");
+                continue;
+            }
+        }
     }
 }
 
@@ -28,7 +60,7 @@ fn prompt_user_for_index() -> i32 {
 
         io::stdin()
             .read_line(&mut input)
-            .expect("Input was invalid");
+            .expect("Input was invalid.");
 
         let input = input.trim().parse::<i32>();
 
